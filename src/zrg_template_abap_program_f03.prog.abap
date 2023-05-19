@@ -147,10 +147,7 @@ ENDCLASS.
 *&---------------------------------------------------------------------*
 *&      --> GIT_DATA
 *&---------------------------------------------------------------------*
-FORM f_display_data USING p_kind
-                          p_git_excel_fix TYPE gtt_excel_fix
-                          p_git_bkpf TYPE gtt_bkpf
-                          p_git_data TYPE gtt_data.
+FORM f_display_data USING p_git_data TYPE gtt_data.
 
   "FALV creation with only table passed
 *  DATA(falv) = zcl_falv=>create( CHANGING ct_table = p_git_data ).
@@ -158,17 +155,26 @@ FORM f_display_data USING p_kind
   "creation of falv with local redefinition
   DATA lcl_falv TYPE REF TO gcl_falv.
 
-  CASE p_kind.
-    WHEN 'RB1'.
-      lcl_falv ?= gcl_falv=>create( EXPORTING  i_subclass = cl_abap_classdescr=>describe_by_name( p_name = 'GCL_FALV' )
-                                    CHANGING ct_table = p_git_excel_fix ) .
-    WHEN 'RB2'.
-      lcl_falv ?= gcl_falv=>create( EXPORTING  i_subclass = cl_abap_classdescr=>describe_by_name( p_name = 'GCL_FALV' )
-                                    CHANGING ct_table = p_git_bkpf ) .
-    WHEN 'RB3'.
-      lcl_falv ?= gcl_falv=>create( EXPORTING  i_subclass = cl_abap_classdescr=>describe_by_name( p_name = 'GCL_FALV' )
-                                    CHANGING ct_table = p_git_data ) .
-  ENDCASE.
+*  CASE gd_rb.
+*    WHEN 'NO TRACING'.
+*      CASE s_zlevel-low.
+*        WHEN 1 OR 2 OR 3.
+*          lcl_falv ?= gcl_falv=>create( EXPORTING  i_subclass = cl_abap_classdescr=>describe_by_name( p_name = 'GCL_FALV' )
+*                                        CHANGING ct_table = p_git_data_sum_final ) .
+*        WHEN 4.
+*          lcl_falv ?= gcl_falv=>create( EXPORTING  i_subclass = cl_abap_classdescr=>describe_by_name( p_name = 'GCL_FALV' )
+*                                        CHANGING ct_table = p_git_data_sum_final_b ) .
+*      ENDCASE.
+*    WHEN 'TRACING LEVEL 1'.
+*      lcl_falv ?= gcl_falv=>create( EXPORTING  i_subclass = cl_abap_classdescr=>describe_by_name( p_name = 'GCL_FALV' )
+*                                    CHANGING ct_table = p_git_data_pre_detail ) .
+*    WHEN 'TRACING LEVEL 2'.
+*      lcl_falv ?= gcl_falv=>create( EXPORTING  i_subclass = cl_abap_classdescr=>describe_by_name( p_name = 'GCL_FALV' )
+*                                    CHANGING ct_table = p_git_data_detail ) .
+*  ENDCASE.
+
+  lcl_falv ?= gcl_falv=>create( EXPORTING  i_subclass = cl_abap_classdescr=>describe_by_name( p_name = 'GCL_FALV' )
+                                CHANGING ct_table = p_git_data ) .
 
 *  IF sy-batch EQ ''.
 *    lcl_falv->check_changed_data( ).

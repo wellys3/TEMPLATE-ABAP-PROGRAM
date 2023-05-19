@@ -101,8 +101,6 @@ FORM f_set_text .
   label003 = 'Table MARA & MAKT'.
 
   title002 = 'Selection Area Upload'.
-  label004 = 'Is multisheet?'.
-  label005 = '(X = On | <BLANK> = Off)'.
 
   title003 = 'Selection Area BKPF'.
 
@@ -134,17 +132,17 @@ FORM f_download_template .
 
   DATA : lo_mime      TYPE REF TO if_mr_api.
   DATA : lt_binfiles  TYPE STANDARD TABLE OF sdokcntbin.
-  DATA : ld_files            TYPE xstring,
-         ld_filename         TYPE string,
-         ld_path             TYPE string,
-         ld_fullpath         TYPE string,
-         ld_useraction       TYPE i,
-         ld_default_filename TYPE string.
+  DATA : lv_files            TYPE xstring,
+         lv_filename         TYPE string,
+         lv_path             TYPE string,
+         lv_fullpath         TYPE string,
+         lv_useraction       TYPE i,
+         lv_default_filename TYPE string.
 
   "*--------------------------------------------------------------------*
 
-  CONCATENATE gc_filename '_' sy-datum '_' sy-uzeit INTO ld_default_filename.
-  CONCATENATE ld_default_filename '.xls' INTO ld_default_filename.
+  CONCATENATE gc_filename '_' sy-datum '_' sy-uzeit INTO lv_default_filename.
+  CONCATENATE lv_default_filename '.xls' INTO lv_default_filename.
 
   lo_mime = cl_mime_repository_api=>get_api( ).
 
@@ -152,15 +150,15 @@ FORM f_download_template .
     EXPORTING
       i_url     = gc_template_url
     IMPORTING
-      e_content = ld_files.
-  IF ld_files IS INITIAL.
+      e_content = lv_files.
+  IF lv_files IS INITIAL.
     MESSAGE e071(/isdfps/ppempo).
     RETURN.
   ENDIF.
 
   CALL FUNCTION 'SCMS_XSTRING_TO_BINARY'
     EXPORTING
-      buffer     = ld_files
+      buffer     = lv_files
     TABLES
       binary_tab = lt_binfiles.
 
@@ -168,12 +166,12 @@ FORM f_download_template .
     EXPORTING
       window_title         = 'Select filename & location'
       default_extension    = 'xls'
-      default_file_name    = ld_default_filename
+      default_file_name    = lv_default_filename
     CHANGING
-      filename             = ld_filename
-      path                 = ld_path
-      fullpath             = ld_fullpath
-      user_action          = ld_useraction
+      filename             = lv_filename
+      path                 = lv_path
+      fullpath             = lv_fullpath
+      user_action          = lv_useraction
     EXCEPTIONS
       cntl_error           = 1
       error_no_gui         = 2
@@ -184,7 +182,7 @@ FORM f_download_template .
     MESSAGE e043(/sdf/smon).
   ENDIF.
 
-  IF ld_useraction = cl_gui_frontend_services=>action_cancel.
+  IF lv_useraction = cl_gui_frontend_services=>action_cancel.
     "The action was cancelled by the user
     MESSAGE s007(rsoh).
     RETURN.
@@ -192,7 +190,7 @@ FORM f_download_template .
 
   CALL METHOD cl_gui_frontend_services=>gui_download
     EXPORTING
-      filename                = ld_fullpath
+      filename                = lv_fullpath
       filetype                = 'BIN'
     CHANGING
       data_tab                = lt_binfiles
@@ -230,10 +228,10 @@ FORM f_download_template .
 
   FREE: lt_binfiles.
 
-  FREE: ld_filename,
-        ld_files,
-        ld_fullpath,
-        ld_path.
+  FREE: lv_filename,
+        lv_files,
+        lv_fullpath,
+        lv_path.
 
 ENDFORM.                    "f_download_template
 
@@ -358,17 +356,12 @@ ENDFORM.
 *----------------------------------------------------------------------*
 *      -->P_VALUE    text
 *----------------------------------------------------------------------*
-FORM f_progress_bar_single USING p_value
-                                 p_type
-                                 p_display_like.
-
+FORM f_progress_bar_single USING p_value.
   CALL FUNCTION 'SAPGUI_PROGRESS_INDICATOR'
     EXPORTING
       percentage = 0
       text       = p_value.
-
-  MESSAGE p_value TYPE p_type DISPLAY LIKE p_display_like.
-
+  MESSAGE p_value TYPE 'S'.
 ENDFORM.                    "f_progress_bar_single
 
 
@@ -565,10 +558,10 @@ ENDFORM.
 *----------------------------------------------------------------------*
 FORM f_get_file_dir CHANGING pp_fnm TYPE rlgrap-filename.
 
-  DATA : lt_filetable TYPE filetable.
-  DATA : ls_filetable TYPE LINE OF filetable.
-  DATA : ld_user_action TYPE i,
-         ld_rc          TYPE i.
+  DATA : lt_filetable     TYPE filetable.
+  DATA : ls_filetable     TYPE LINE OF filetable.
+  DATA : lv_user_action TYPE i,
+         lv_rc          TYPE i.
 
   "*--------------------------------------------------------------------*
 
@@ -580,8 +573,8 @@ FORM f_get_file_dir CHANGING pp_fnm TYPE rlgrap-filename.
       initial_directory       = gc_init_dir
     CHANGING
       file_table              = lt_filetable
-      rc                      = ld_rc
-      user_action             = ld_user_action
+      rc                      = lv_rc
+      user_action             = lv_user_action
     EXCEPTIONS
       file_open_dialog_failed = 1
       cntl_error              = 2
@@ -594,7 +587,7 @@ FORM f_get_file_dir CHANGING pp_fnm TYPE rlgrap-filename.
     RETURN.
   ENDIF.
 
-  IF ld_user_action = cl_gui_frontend_services=>action_cancel.
+  IF lv_user_action = cl_gui_frontend_services=>action_cancel.
     "The action was cancelled by the user
     MESSAGE s007(rsoh).
     RETURN.
@@ -609,8 +602,8 @@ FORM f_get_file_dir CHANGING pp_fnm TYPE rlgrap-filename.
 
   FREE: ls_filetable.
 
-  FREE: ld_user_action,
-        ld_rc.
+  FREE: lv_user_action,
+        lv_rc.
 
 ENDFORM.                    "f_get_file_dir
 
