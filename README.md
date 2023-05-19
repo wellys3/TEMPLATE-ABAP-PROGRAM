@@ -12,7 +12,7 @@ Template for ABAP Program
 ## Changelog
 
 - 2023.05.19 v1.0.1:
-  - Download template
+  - Download Template Excel
   - Improvement Upload Excel, Single Sheet & Multi Sheet
   - Bug fixed
 
