@@ -31,3 +31,27 @@ FORM f_process_data    USING p_git_mara TYPE gtt_mara
   ENDLOOP.
 
 ENDFORM.
+
+
+*&---------------------------------------------------------------------*
+*& Form F_PREPARING_EXCEL_DATA
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      --> GIT_EXCEL_RAW
+*&      <-- GIT_EXCEL_FIX
+*&---------------------------------------------------------------------*
+FORM f_preparing_excel_data     USING p_git_excel_raw TYPE gtt_excel_raw
+                             CHANGING p_git_excel_fix TYPE gtt_excel_fix.
+
+  LOOP AT p_git_excel_raw INTO gwa_excel_raw.
+
+    CLEAR gwa_excel_fix.
+    gwa_excel_fix-bukrs = gwa_excel_raw-col1.
+    gwa_excel_fix-belnr = gwa_excel_raw-col2.
+    gwa_excel_fix-gjahr = gwa_excel_raw-col3.
+    APPEND gwa_excel_fix TO p_git_excel_fix.
+
+  ENDLOOP.
+
+ENDFORM.

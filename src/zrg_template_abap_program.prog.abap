@@ -75,7 +75,7 @@ END-OF-SELECTION.
 * At-Selection-Screen                                                *
 *--------------------------------------------------------------------*
 AT SELECTION-SCREEN.
-*  PERFORM f_download_template.
+  PERFORM f_download_template.
   PERFORM f_mandatory_validation.
 
 AT SELECTION-SCREEN OUTPUT.
