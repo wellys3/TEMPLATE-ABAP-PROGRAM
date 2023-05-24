@@ -9,6 +9,9 @@ Template for ABAP Program
    Date    : 19.05.2023  
    Version : 1.0.1  
 
+## Installation
+This project is supported by ABAPGit Project. Download ZIP file or integrate this project to him.
+
 ## Changelog
 
 - 2023.05.19 v1.0.1:
