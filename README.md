@@ -10,7 +10,7 @@ Template for ABAP Program
    Version : 1.0.1  
 
 ## Installation
-This project is supported by `ABAPGit Project`_. Download ZIP file or integrate this project to him. 
+This project is supported by <a href="https://github.com/larshp/abapGit">ABAPGit Project</a>. Download ZIP file or integrate this project to him.
 
 ## Changelog
 
