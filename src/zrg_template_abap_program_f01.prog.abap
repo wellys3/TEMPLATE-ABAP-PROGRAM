@@ -49,10 +49,23 @@ FORM f_execute .
 
           PERFORM f_stop_timer.
 
-          PERFORM f_display_data USING gd_rb
-                                       git_excel_fix[]
-                                       git_bkpf[]
-                                       git_data[].
+          "This program sucessfully executed! (Exec. Time & seconds)
+          WAIT UP TO 1 SECONDS.
+          CLEAR gd_message.
+          CONCATENATE 'This program sucessfully executed! (Exec. Time'
+                      gd_run_str
+                      'seconds)'
+            INTO gd_message SEPARATED BY space.
+          PERFORM f_progress_bar_single USING gd_message 'S' 'S'.
+
+          IF git_excel_fix[] IS NOT INITIAL.
+            PERFORM f_display_data USING git_excel_fix[]
+                                         git_bkpf[]
+                                         git_mara_makt[]
+                                         git_mara_makt_2[].
+          ELSE.
+            MESSAGE 'No data found' TYPE 'S' DISPLAY LIKE 'W'.
+          ENDIF.
 
         WHEN 'X'.
 
@@ -67,10 +80,23 @@ FORM f_execute .
 
           PERFORM f_stop_timer.
 
-          PERFORM f_display_data USING gd_rb
-                                       git_excel_fix[]
-                                       git_bkpf[]
-                                       git_data[].
+          "This program sucessfully executed! (Exec. Time & seconds)
+          WAIT UP TO 1 SECONDS.
+          CLEAR gd_message.
+          CONCATENATE 'This program sucessfully executed! (Exec. Time'
+                      gd_run_str
+                      'seconds)'
+            INTO gd_message SEPARATED BY space.
+          PERFORM f_progress_bar_single USING gd_message 'S' 'S'.
+
+          IF git_excel_fix[] IS NOT INITIAL.
+            PERFORM f_display_data USING git_excel_fix[]
+                                         git_bkpf[]
+                                         git_mara_makt[]
+                                         git_mara_makt_2[].
+          ELSE.
+            MESSAGE 'No data found' TYPE 'S' DISPLAY LIKE 'W'.
+          ENDIF.
 
       ENDCASE.
 
@@ -85,10 +111,23 @@ FORM f_execute .
 
       PERFORM f_stop_timer.
 
-      PERFORM f_display_data USING gd_rb
-                                   git_excel_fix[]
-                                   git_bkpf[]
-                                   git_data[].
+      "This program sucessfully executed! (Exec. Time & seconds)
+      WAIT UP TO 1 SECONDS.
+      CLEAR gd_message.
+      CONCATENATE 'This program sucessfully executed! (Exec. Time'
+                  gd_run_str
+                  'seconds)'
+        INTO gd_message SEPARATED BY space.
+      PERFORM f_progress_bar_single USING gd_message 'S' 'S'.
+
+      IF git_bkpf[] IS NOT INITIAL.
+        PERFORM f_display_data USING git_excel_fix[]
+                                     git_bkpf[]
+                                     git_mara_makt[]
+                                     git_mara_makt_2[].
+      ELSE.
+        MESSAGE 'No data found' TYPE 'S' DISPLAY LIKE 'W'.
+      ENDIF.
 
     WHEN 'RB3'.
 
@@ -101,14 +140,62 @@ FORM f_execute .
 
       PERFORM f_process_data    USING git_mara
                                       git_makt
-                             CHANGING git_data.
+                             CHANGING git_mara_makt
+                                      git_mara_makt_2.
 
       PERFORM f_stop_timer.
 
-      PERFORM f_display_data USING gd_rb
-                                   git_excel_fix[]
-                                   git_bkpf[]
-                                   git_data[].
+      "This program sucessfully executed! (Exec. Time & seconds)
+      WAIT UP TO 1 SECONDS.
+      CLEAR gd_message.
+      CONCATENATE 'This program sucessfully executed! (Exec. Time'
+                  gd_run_str
+                  'seconds)'
+        INTO gd_message SEPARATED BY space.
+      PERFORM f_progress_bar_single USING gd_message 'S' 'S'.
+
+      IF git_mara_makt[] IS NOT INITIAL.
+        PERFORM f_display_data USING git_excel_fix[]
+                                     git_bkpf[]
+                                     git_mara_makt[]
+                                     git_mara_makt_2[].
+      ELSE.
+        MESSAGE 'No data found' TYPE 'S' DISPLAY LIKE 'W'.
+      ENDIF.
+
+    WHEN 'RB4'.
+
+      PERFORM f_start_timer.
+
+      PERFORM f_get_data CHANGING gd_rb
+                                  git_mara
+                                  git_makt
+                                  git_bkpf.
+
+      PERFORM f_process_data    USING git_mara
+                                      git_makt
+                             CHANGING git_mara_makt
+                                      git_mara_makt_2.
+
+      PERFORM f_stop_timer.
+
+      "This program sucessfully executed! (Exec. Time & seconds)
+      WAIT UP TO 1 SECONDS.
+      CLEAR gd_message.
+      CONCATENATE 'This program sucessfully executed! (Exec. Time'
+                  gd_run_str
+                  'seconds)'
+        INTO gd_message SEPARATED BY space.
+      PERFORM f_progress_bar_single USING gd_message 'S' 'S'.
+
+      IF git_mara_makt_2[] IS NOT INITIAL.
+        PERFORM f_display_data USING git_excel_fix[]
+                                     git_bkpf[]
+                                     git_mara_makt[]
+                                     git_mara_makt_2[].
+      ELSE.
+        MESSAGE 'No data found' TYPE 'S' DISPLAY LIKE 'W'.
+      ENDIF.
 
   ENDCASE.
 
@@ -140,6 +227,13 @@ FORM f_get_data  CHANGING p_rb
               blart IN s_blart.
 
     WHEN 'RB3'.
+
+      SELECT * FROM mara INTO TABLE p_git_mara
+        WHERE matnr IN s_matnr.
+      SELECT * FROM makt INTO TABLE p_git_makt
+        WHERE matnr IN s_matnr.
+
+    WHEN 'RB4'.
 
       SELECT * FROM mara INTO TABLE p_git_mara
         WHERE matnr IN s_matnr.

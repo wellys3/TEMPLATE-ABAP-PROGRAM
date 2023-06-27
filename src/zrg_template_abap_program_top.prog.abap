@@ -225,17 +225,25 @@ TYPES: BEGIN OF gty_excel_raw,
 *         message   TYPE text255,
        END OF gty_excel_fix,
 
-       BEGIN OF gty_data,
+       BEGIN OF gty_mara_makt,
          matnr TYPE mara-matnr,
          maktx TYPE makt-maktx,
-       END OF gty_data,
+       END OF gty_mara_makt,
 
-       gtt_excel_raw TYPE TABLE OF gty_excel_raw,
-       gtt_excel_fix TYPE STANDARD TABLE OF gty_excel_fix,
-       gtt_data      TYPE TABLE OF gty_data,
-       gtt_mara      TYPE TABLE OF mara,
-       gtt_makt      TYPE TABLE OF makt,
-       gtt_bkpf type table of bkpf.
+       BEGIN OF gty_mara_makt_2,
+         select      TYPE bcselect,
+         matnr       TYPE mara-matnr,
+         maktx       TYPE makt-maktx,
+         matnr_maktx TYPE text80,
+       END OF gty_mara_makt_2,
+
+       gtt_excel_raw   TYPE TABLE OF gty_excel_raw,
+       gtt_excel_fix   TYPE STANDARD TABLE OF gty_excel_fix,
+       gtt_mara_makt   TYPE TABLE OF gty_mara_makt,
+       gtt_mara_makt_2 TYPE TABLE OF gty_mara_makt_2,
+       gtt_mara        TYPE TABLE OF mara,
+       gtt_makt        TYPE TABLE OF makt,
+       gtt_bkpf        TYPE TABLE OF bkpf.
 
 *--Custom Global Types
 
@@ -249,18 +257,20 @@ TYPES: BEGIN OF gty_excel_raw,
 *----------------------------------------------------------------------*
 *---Standard Global Variable
 *---Variable Program - Table & Work Area
-DATA: git_data      TYPE TABLE OF gty_data,
-      gwa_data      TYPE gty_data,
-      git_mara      TYPE TABLE OF mara,
-      gwa_mara      TYPE mara,
-      git_makt      TYPE TABLE OF makt,
-      gwa_makt      TYPE makt,
-      git_bkpf type table of bkpf,
+DATA: git_mara_makt   TYPE TABLE OF gty_mara_makt,
+      gwa_mara_makt   TYPE gty_mara_makt,
+      git_mara_makt_2 TYPE TABLE OF gty_mara_makt_2,
+      gwa_mara_makt_2 TYPE gty_mara_makt_2,
+      git_mara        TYPE TABLE OF mara,
+      gwa_mara        TYPE mara,
+      git_makt        TYPE TABLE OF makt,
+      gwa_makt        TYPE makt,
+      git_bkpf        TYPE TABLE OF bkpf,
 
-      git_excel_raw TYPE TABLE OF gty_excel_raw,
-      gwa_excel_raw TYPE gty_excel_raw,
-      git_excel_fix TYPE TABLE OF gty_excel_fix,
-      gwa_excel_fix TYPE gty_excel_fix.
+      git_excel_raw   TYPE TABLE OF gty_excel_raw,
+      gwa_excel_raw   TYPE gty_excel_raw,
+      git_excel_fix   TYPE TABLE OF gty_excel_fix,
+      gwa_excel_fix   TYPE gty_excel_fix.
 
 *---Variable Program - Single Value
 DATA: gd_tabix     TYPE sy-tabix,
@@ -347,29 +357,33 @@ END-OF-DEFINITION.
 * Selection Screen                                                     *
 *----------------------------------------------------------------------*
 *Radio Button
-SELECTION-SCREEN BEGIN OF BLOCK a01 WITH FRAME TITLE title001.
+SELECTION-SCREEN BEGIN OF BLOCK a01 WITH FRAME TITLE h001.
 SELECTION-SCREEN BEGIN OF LINE.
-PARAMETERS: rb1 RADIOBUTTON GROUP rb USER-COMMAND rad DEFAULT 'X'.
-SELECTION-SCREEN COMMENT 4(30) label001.
+PARAMETERS: rb1 RADIOBUTTON GROUP rb USER-COMMAND uco DEFAULT 'X'.
+SELECTION-SCREEN COMMENT 4(30) h001s001.
 SELECTION-SCREEN END OF LINE.
 SELECTION-SCREEN BEGIN OF LINE.
 PARAMETERS: rb2 RADIOBUTTON GROUP rb.
-SELECTION-SCREEN COMMENT 4(30) label002.
+SELECTION-SCREEN COMMENT 4(30) h001s002.
 SELECTION-SCREEN END OF LINE.
 SELECTION-SCREEN BEGIN OF LINE.
 PARAMETERS: rb3 RADIOBUTTON GROUP rb.
-SELECTION-SCREEN COMMENT 4(30) label003.
+SELECTION-SCREEN COMMENT 4(30) h001s003.
+SELECTION-SCREEN END OF LINE.
+SELECTION-SCREEN BEGIN OF LINE.
+PARAMETERS: rb4 RADIOBUTTON GROUP rb.
+SELECTION-SCREEN COMMENT 4(50) h001s004.
 SELECTION-SCREEN END OF LINE.
 SELECTION-SCREEN END OF BLOCK a01.
 
 *--------------------------------------------------------------------*
 
-SELECTION-SCREEN BEGIN OF BLOCK b01 WITH FRAME TITLE title002.
+SELECTION-SCREEN BEGIN OF BLOCK b01 WITH FRAME TITLE h002.
 
 SELECTION-SCREEN BEGIN OF LINE.
-SELECTION-SCREEN COMMENT (31) label004 MODIF ID m01.
+SELECTION-SCREEN COMMENT (31) h002s001 MODIF ID m01.
 PARAMETERS: cb_sheet AS CHECKBOX USER-COMMAND u1 MODIF ID m01. "Checkbox Multisheet
-SELECTION-SCREEN COMMENT 36(30) label005 MODIF ID m01.
+SELECTION-SCREEN COMMENT 36(30) h002s002 MODIF ID m01.
 SELECTION-SCREEN END OF LINE.
 
 PARAMETERS: p_file TYPE rlgrap-filename MEMORY ID ysd_filename MODIF ID m01.
@@ -377,7 +391,7 @@ SELECTION-SCREEN END OF BLOCK b01.
 
 *--------------------------------------------------------------------*
 
-SELECTION-SCREEN BEGIN OF BLOCK c01 WITH FRAME TITLE title003.
+SELECTION-SCREEN BEGIN OF BLOCK c01 WITH FRAME TITLE h003.
 SELECT-OPTIONS: s_bukrs FOR bkpf-bukrs NO-EXTENSION NO INTERVALS MODIF ID m02,
                 s_gjahr FOR bkpf-gjahr NO-EXTENSION MODIF ID m02,
                 s_belnr FOR bkpf-belnr NO INTERVALS MODIF ID m02,
@@ -386,9 +400,15 @@ SELECTION-SCREEN END OF BLOCK c01.
 
 *--------------------------------------------------------------------*
 
-SELECTION-SCREEN BEGIN OF BLOCK d01 WITH FRAME TITLE title004.
+SELECTION-SCREEN BEGIN OF BLOCK d01 WITH FRAME TITLE h004.
 SELECT-OPTIONS: s_matnr FOR mara-matnr MODIF ID m03.
 SELECTION-SCREEN END OF BLOCK d01.
+
+*--------------------------------------------------------------------*
+
+SELECTION-SCREEN BEGIN OF BLOCK e01 WITH FRAME TITLE h005.
+SELECT-OPTIONS: s2_matnr FOR mara-matnr MODIF ID m04.
+SELECTION-SCREEN END OF BLOCK e01.
 
 *--------------------------------------------------------------------*
 

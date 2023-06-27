@@ -15,7 +15,6 @@ FORM f_initialization .
   PERFORM f_add_download_button.
   PERFORM f_get_terminal_debugger.
   PERFORM f_set_text.
-*  PERFORM f_get_rb.
 ENDFORM.                    "f_initialization
 
 
@@ -95,27 +94,28 @@ ENDFORM.                    "f_add_download_button
 *&---------------------------------------------------------------------*
 FORM f_set_text .
 
-  title001 = 'Selection Option'.
-  label001 = 'Upload File'.
-  label002 = 'Table BKPF'.
-  label003 = 'Table MARA & MAKT'.
+  h001 = 'Selection Option'.
+  h001s001 = 'Upload File'.
+  h001s002 = 'Table BKPF'.
+  h001s003 = 'Table MARA & MAKT'.
+  h001s004 = 'Table MARA & MAKT with Button in ALV'.
 
-  title002 = 'Selection Area Upload'.
-  label004 = 'Is multisheet?'.
-  label005 = '(X = On | <BLANK> = Off)'.
-
-  title003 = 'Selection Area BKPF'.
-
-  title004 = 'Selection Area MARA'.
-
+  h002 = 'Selection Area Upload'.
+  h002s001 = 'Is multisheet?'.
+  h002s002 = '(X = On | <BLANK> = Off)'.
   %_p_file_%_app_%-text = 'Filepath'.
 
+  h003 = 'Selection Area BKPF'.
   %_s_bukrs_%_app_%-text = 'Company Code'.
   %_s_gjahr_%_app_%-text = 'Fiscal Year'.
   %_s_belnr_%_app_%-text = 'Document Number'.
   %_s_blart_%_app_%-text = 'Document Type'.
 
+  h004 = 'Selection Area MARA & MAKT'.
   %_s_matnr_%_app_%-text = 'Material Number'.
+
+  h005 = 'Selection Area MARA & MAKT with Button in ALV'.
+  %_s2_matnr_%_app_%-text = 'Material Number'.
 
 ENDFORM.                    "f_set_text
 
@@ -288,20 +288,14 @@ FORM f_modify_screen .
 
       LOOP AT SCREEN.
 
-*        CASE screen-name.
-*          WHEN 'S_BUKRS-LOW'.
-*            screen-required = '2'.
-*            MODIFY SCREEN.
-*          WHEN 'S_GJAHR-LOW'.
-*            screen-required = '2'.
-*            MODIFY SCREEN.
-*        ENDCASE.
-
         CASE screen-group1.
           WHEN 'M02'.
             screen-active = '0'.
             MODIFY SCREEN.
           WHEN 'M03'.
+            screen-active = '0'.
+            MODIFY SCREEN.
+          WHEN 'M04'.
             screen-active = '0'.
             MODIFY SCREEN.
         ENDCASE.
@@ -325,6 +319,9 @@ FORM f_modify_screen .
           WHEN 'M03'.
             screen-active = '0'.
             MODIFY SCREEN.
+          WHEN 'M04'.
+            screen-active = '0'.
+            MODIFY SCREEN.
         ENDCASE.
 
       ENDLOOP.
@@ -338,6 +335,27 @@ FORM f_modify_screen .
             screen-active = '0'.
             MODIFY SCREEN.
           WHEN 'M02'.
+            screen-active = '0'.
+            MODIFY SCREEN.
+          WHEN 'M04'.
+            screen-active = '0'.
+            MODIFY SCREEN.
+        ENDCASE.
+
+      ENDLOOP.
+
+    WHEN 'RB4'.
+
+      LOOP AT SCREEN.
+
+        CASE screen-group1.
+          WHEN 'M01'.
+            screen-active = '0'.
+            MODIFY SCREEN.
+          WHEN 'M02'.
+            screen-active = '0'.
+            MODIFY SCREEN.
+          WHEN 'M03'.
             screen-active = '0'.
             MODIFY SCREEN.
         ENDCASE.
@@ -719,6 +737,7 @@ FORM f_convert_amount  USING p_kind
 
 ENDFORM.
 
+
 *&---------------------------------------------------------------------*
 *& Form F_GET_DATE_TIME
 *&---------------------------------------------------------------------*
@@ -855,8 +874,8 @@ FORM f_get_rb .
     gd_rb = 'RB2'.
   ELSEIF rb3 EQ 'X'.
     gd_rb = 'RB3'.
-*  ELSEIF rb4 EQ 'X'.
-*    gd_rb = 'TRACING LEVEL 3'.
+  ELSEIF rb4 EQ 'X'.
+    gd_rb = 'RB4'.
   ENDIF.
 
   "--------------------------------------------------------------------*

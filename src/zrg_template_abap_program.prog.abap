@@ -9,13 +9,13 @@
 *& Description : Program Xxx
 *&
 *& Module      : Financial Accounting / Material Management / Sales Distribution / XXX
-*& Functional  : - xxx (danang.wijaya@equine.co.id)
+*& Functional  : - xxx (xxx.xxx@equine.co.id)
 *& FSD Loc.    : - SO2_MIME_REPOSITORY --> SAP --> PUBLIC --> ZFSD
 *& FSD         : -
 *& Developer   : Welly Sugiarto (welly.sugiarto@equine.co.id)
 *& Date        : January 1st, 2023
-*& Copyright   : © xxxx PT XXX
-*&               © xxxx PT XXX
+*& Copyright   : © 2023 PT XXX
+*&               © 2023 PT XXX
 *&
 *& Transport Request History (Any changes of TR will be updated here future):
 *& *  EQGK****** ABAP1 EG-AB-WSU: zrg_template_abap_program

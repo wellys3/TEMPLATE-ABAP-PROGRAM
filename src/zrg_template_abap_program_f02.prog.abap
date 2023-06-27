@@ -12,23 +12,47 @@
 *&---------------------------------------------------------------------*
 FORM f_process_data    USING p_git_mara TYPE gtt_mara
                              p_git_makt TYPE gtt_makt
-                    CHANGING p_git_data TYPE gtt_data.
+                    CHANGING p_git_mara_makt TYPE gtt_mara_makt
+                             p_git_mara_makt_2 TYPE gtt_mara_makt_2.
 
-  LOOP AT p_git_mara INTO gwa_mara.
+  CASE gd_rb.
+    WHEN 'RB3'.
 
-    CLEAR gwa_data.
-    gwa_data-matnr = gwa_mara-matnr.
+      LOOP AT p_git_mara INTO gwa_mara.
 
-    READ TABLE p_git_makt INTO gwa_makt WITH KEY matnr = gwa_mara-matnr.
-    IF sy-subrc EQ 0.
+        CLEAR gwa_mara_makt.
+        gwa_mara_makt-matnr = gwa_mara-matnr.
 
-      gwa_data-maktx = gwa_makt-maktx.
+        READ TABLE p_git_makt INTO gwa_makt WITH KEY matnr = gwa_mara-matnr.
+        IF sy-subrc EQ 0.
 
-    ENDIF.
+          gwa_mara_makt-maktx = gwa_makt-maktx.
 
-    APPEND gwa_data TO p_git_data.
+        ENDIF.
 
-  ENDLOOP.
+        APPEND gwa_mara_makt TO p_git_mara_makt.
+
+      ENDLOOP.
+
+    WHEN 'RB4'.
+
+      LOOP AT p_git_mara INTO gwa_mara.
+
+        CLEAR gwa_mara_makt_2.
+        gwa_mara_makt_2-matnr = gwa_mara-matnr.
+
+        READ TABLE p_git_makt INTO gwa_makt WITH KEY matnr = gwa_mara-matnr.
+        IF sy-subrc EQ 0.
+
+          gwa_mara_makt_2-maktx = gwa_makt-maktx.
+
+        ENDIF.
+
+        APPEND gwa_mara_makt_2 TO p_git_mara_makt_2.
+
+      ENDLOOP.
+
+  ENDCASE.
 
 ENDFORM.
 
@@ -51,6 +75,28 @@ FORM f_preparing_excel_data     USING p_git_excel_raw TYPE gtt_excel_raw
     gwa_excel_fix-belnr = gwa_excel_raw-col2.
     gwa_excel_fix-gjahr = gwa_excel_raw-col3.
     APPEND gwa_excel_fix TO p_git_excel_fix.
+
+  ENDLOOP.
+
+ENDFORM.
+
+
+*&---------------------------------------------------------------------*
+*& Form F_EXEC_BUTTON_1
+*&---------------------------------------------------------------------*
+*& text
+*&---------------------------------------------------------------------*
+*&      <-- GIT_DATA[]
+*&---------------------------------------------------------------------*
+FORM f_exec_button_1  CHANGING p_git_mara_makt_2 TYPE gtt_mara_makt_2.
+
+  LOOP AT p_git_mara_makt_2 ASSIGNING FIELD-SYMBOL(<lfs_mara_makt_2>)
+    WHERE select EQ 'X'.
+
+    CONCATENATE <lfs_mara_makt_2>-matnr
+                <lfs_mara_makt_2>-maktx
+     INTO <lfs_mara_makt_2>-matnr_maktx
+      SEPARATED BY space.
 
   ENDLOOP.
 
