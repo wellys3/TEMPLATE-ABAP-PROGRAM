@@ -6,8 +6,8 @@ Template for ABAP Program
 
    Program : ZRG_TEMPLATE_ABAP_PROGRAM  
    Author  : Welly Sugiarto  
-   Date    : 27.06.2023  
-   Version : 1.0.2 
+   Date    : 11.07.2023  
+   Version : 1.0.3
 
 ## Installation
 
