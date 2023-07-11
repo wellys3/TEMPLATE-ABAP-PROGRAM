@@ -6,7 +6,7 @@
 
 
 *&-------------------------------------------------------------------*
-*& Description : Reprot Xxx / Program Xxx
+*& Description : Report Xxx / Program Xxx
 *&
 *& Module      : Financial Accounting / Material Management / Sales Distribution / XXX
 *& Date        : January 1st, 2023
