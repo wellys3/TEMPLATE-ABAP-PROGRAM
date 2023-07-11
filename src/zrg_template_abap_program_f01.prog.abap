@@ -197,9 +197,10 @@ FORM f_execute .
         MESSAGE 'No data found' TYPE 'S' DISPLAY LIKE 'W'.
       ENDIF.
 
+*Unremark this syntax below for your program
+*    WHEN 'RB99'.
+
   ENDCASE.
-
-
 
 ENDFORM.
 

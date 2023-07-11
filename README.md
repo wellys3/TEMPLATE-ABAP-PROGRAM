@@ -15,6 +15,12 @@ This project is supported by <a href="https://github.com/larshp/abapGit">ABAPGit
 
 ## Changelog
 
+- 2023.07.11 v1.0.3:
+  - Add to hide all selection screen
+  - Update skeleton description program
+  - Insert syntax: *Unremark this syntax below for your program
+  - Add reference syntax for PERFORM f_modify_field
+
 - 2023.06.27 v1.0.2:
   - Add Radio Button 4: Table MARA & MAKT with Button in ALV
   - Fix all syntax more clean

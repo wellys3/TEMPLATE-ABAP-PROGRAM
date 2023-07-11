@@ -364,7 +364,18 @@ FORM f_modify_screen .
 
   ENDCASE.
 
+  "*--------------------------------------------------------------------*
 
+*Unremark this syntax below for your program
+*  LOOP AT SCREEN.
+*
+*    CASE screen-group1.
+*      WHEN 'M00' OR 'M01' OR 'M02' OR 'M03' OR 'M04'.
+*        screen-active = '0'.
+*        MODIFY SCREEN.
+*    ENDCASE.
+*
+*  ENDLOOP.
 
 ENDFORM.
 
@@ -876,6 +887,11 @@ FORM f_get_rb .
     gd_rb = 'RB3'.
   ELSEIF rb4 EQ 'X'.
     gd_rb = 'RB4'.
+
+*Unremark this syntax below for your program
+*  ELSEIF rb99 EQ 'X'.
+*    gd_rb = 'RB99'.
+
   ENDIF.
 
   "--------------------------------------------------------------------*

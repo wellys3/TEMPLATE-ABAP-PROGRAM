@@ -6,14 +6,14 @@
 
 
 *&-------------------------------------------------------------------*
-*& Description : Program Xxx
+*& Description : Reprot Xxx / Program Xxx
 *&
 *& Module      : Financial Accounting / Material Management / Sales Distribution / XXX
+*& Date        : January 1st, 2023
+*& Developer   : - your complete name (your email)
 *& Functional  : - xxx (xxx.xxx@equine.co.id)
 *& FSD Loc.    : - SO2_MIME_REPOSITORY --> SAP --> PUBLIC --> ZFSD
 *& FSD         : -
-*& Developer   : Welly Sugiarto (welly.sugiarto@equine.co.id)
-*& Date        : January 1st, 2023
 *& Copyright   : © 2023 PT XXX
 *&               © 2023 PT XXX
 *&

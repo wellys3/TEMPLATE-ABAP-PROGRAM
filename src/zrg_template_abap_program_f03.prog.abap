@@ -336,6 +336,20 @@ ENDFORM.
 *&---------------------------------------------------------------------*
 FORM f_modify_field USING p_me TYPE REF TO gcl_falv.
 
+*Reference
+*  p_me->column( 'XXX' )->set_no_out( 'X' ). "Hide or not column
+*  p_me->column( 'XXX' )->set_key( '' ). "Remove or not key column form dictionary
+*  p_me->column( 'XXX' )->set_fix_column( iv_value = '' ). "Remove or not fix column
+*  p_me->column( 'XXX' )->set_col_pos( '01' ). "Set column position with specific sort number
+*  p_me->column( 'XXX' )->set_cfieldname( 'YYY' ). "Set this column to refer with currency field
+*  p_me->column( 'XXX' )->set_qfieldname( 'YYY' ). "Set this column to refer with quantity field
+*  p_me->column( 'XXX' )->set_reptext( 'Your description' ). "Set heading column label
+*  p_me->column( 'XXX' )->set_scrtext_s( 'Your description' ). "Set short column label
+*  p_me->column( 'XXX' )->set_scrtext_m( 'Your description' ). "Set medium column label
+*  p_me->column( 'XXX' )->set_scrtext_l( 'Your description' ). "Set long column label
+
+  "*--------------------------------------------------------------------*
+
   DATA: lit_sort TYPE lvc_t_sort,
         lwa_sort TYPE lvc_s_sort.
 
