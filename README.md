@@ -7,7 +7,7 @@ Template for ABAP Program
    Program : ZRG_TEMPLATE_ABAP_PROGRAM  
    Author  : Welly Sugiarto  
    Date    : 11.07.2023  
-   Version : 1.0.3
+   Version : 1.0.4
 
 ## Installation
 
@@ -15,6 +15,11 @@ This project is supported by <a href="https://github.com/larshp/abapGit">ABAPGit
 
 ## Changelog
 
+- 2023.07.13 v1.0.4:
+  - Fix several syntax in 'Custom Global Types'
+  - Add total rows in Top of Page
+  - Fix get data Radio Button 4
+  
 - 2023.07.11 v1.0.3:
   - Add to hide all selection screen
   - Update skeleton description program
