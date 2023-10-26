@@ -6,7 +6,7 @@ Template for ABAP Program
 
    Program : ZRG_TEMPLATE_ABAP_PROGRAM  
    Author  : Welly Sugiarto  
-   Date    : 26.10.2023  
+   Date    : 2023.10.26  
    Version : 1.0.5
 
 ## Installation
@@ -15,28 +15,28 @@ This project is supported by <a href="https://github.com/larshp/abapGit">ABAPGit
 
 ## Changelog
 
-- 2023.07.13 v1.0.5:
+- v1.0.5 - 2023.10.26:
   - Fix several syntax
 
-- 2023.07.13 v1.0.4:
+- v1.0.4 - 2023.07.13:
   - Fix several syntax in 'Custom Global Types'
   - Add total rows in Top of Page
   - Fix get data Radio Button 4
   
-- 2023.07.11 v1.0.3:
+- v1.0.3 - 2023.07.11:
   - Add to hide all selection screen
   - Update skeleton description program
   - Insert syntax: *Unremark this syntax below for your program
   - Add reference syntax for PERFORM f_modify_field
 
-- 2023.06.27 v1.0.2:
+- v1.0.2 - 2023.06.27:
   - Add Radio Button 4: Table MARA & MAKT with Button in ALV
   - Fix all syntax more clean
 
-- 2023.05.19 v1.0.1:
+- v1.0.1 - 2023.05.19:
   - Download Template Excel
   - Improvement Upload Excel, Single Sheet & Multi Sheet
   - Bug fixed
 
-- 2023.05.18 v1.0.0:
+- v1.0.0 - 2023.05.18 :
   - Initial release
