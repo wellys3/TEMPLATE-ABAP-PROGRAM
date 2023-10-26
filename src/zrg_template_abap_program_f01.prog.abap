@@ -198,7 +198,7 @@ FORM f_execute .
       ENDIF.
 
 *Unremark this syntax below for your program
-*    WHEN 'RB99'.
+*    WHEN 'RB901'.
 
   ENDCASE.
 
@@ -237,9 +237,9 @@ FORM f_get_data  CHANGING p_rb
     WHEN 'RB4'.
 
       SELECT * FROM mara INTO TABLE p_git_mara
-        WHERE matnr IN s_matnr.
+        WHERE matnr IN s2_matnr.
       SELECT * FROM makt INTO TABLE p_git_makt
-        WHERE matnr IN s_matnr.
+        WHERE matnr IN s2_matnr.
 
   ENDCASE.
 

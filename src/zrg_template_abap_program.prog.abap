@@ -55,7 +55,7 @@ INITIALIZATION.
 *--------------------------------------------------------------------*
 START-OF-SELECTION.
 
-  PERFORM f_debug.
+  PERFORM f_break.
 
   CLEAR gd_subrc.
   PERFORM f_pre_execute CHANGING gd_subrc.

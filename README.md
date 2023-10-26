@@ -6,14 +6,17 @@ Template for ABAP Program
 
    Program : ZRG_TEMPLATE_ABAP_PROGRAM  
    Author  : Welly Sugiarto  
-   Date    : 13.07.2023  
-   Version : 1.0.4
+   Date    : 26.10.2023  
+   Version : 1.0.5
 
 ## Installation
 
 This project is supported by <a href="https://github.com/larshp/abapGit">ABAPGit Project</a>. Download ZIP file or integrate this project to him.
 
 ## Changelog
+
+- 2023.07.13 v1.0.5:
+  - Fix several syntax
 
 - 2023.07.13 v1.0.4:
   - Fix several syntax in 'Custom Global Types'

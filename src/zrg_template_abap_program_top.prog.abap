@@ -34,7 +34,7 @@
 *----------------------------------------------------------------------*
 * Tables                                                               *
 *----------------------------------------------------------------------*
-TABLES: sscrfields, bkpf, mara.
+TABLES: sscrfields, bkpf, mara, acdoca.
 *----------------------------------------------------------------------*
 * End - Tables                                                         *
 *----------------------------------------------------------------------*
@@ -246,7 +246,8 @@ TYPES: BEGIN OF gty_excel_raw,
        gtt_bkpf        TYPE TABLE OF bkpf.
 
 *--Custom Global Types
-
+*Unremark this syntax below for your program
+*TYPES: gtt_xxx   TYPE TABLE OF xxx.
 *----------------------------------------------------------------------*
 * End - Global Types                                                   *
 *----------------------------------------------------------------------*
@@ -273,12 +274,14 @@ DATA: git_mara_makt   TYPE TABLE OF gty_mara_makt,
       gwa_excel_fix   TYPE gty_excel_fix.
 
 *---Variable Program - Single Value
-DATA: gd_tabix     TYPE sy-tabix,
-      gd_index     TYPE sy-index,
-      gd_message   TYPE text255,
+DATA: gd_tabix        TYPE sy-tabix,
+      gd_tabix_str    TYPE char10,
+      gd_index        TYPE sy-index,
+      gd_message      TYPE text255,
+      gd_message_bapi TYPE bapiret2-message,
       gd_answer(1), "Variable for Popup Answer.
-      gd_subrc     TYPE sy-subrc,
-      gd_rb        TYPE char20.
+      gd_subrc        TYPE sy-subrc,
+      gd_rb           TYPE char20.
 
 *---For Debugger
 DATA: git_terminal          TYPE TABLE OF tvarvc WITH HEADER LINE,
@@ -327,6 +330,7 @@ DATA: gcl_oref_container   TYPE REF TO cl_gui_custom_container,
 
 *---Custom Global Variable
 *---Variable Program - Table & Work Area
+*Unremark this syntax below for your program
 *DATA: git_data         TYPE TABLE OF xxx,
 *      gwa_data         TYPE xxx.
 *----------------------------------------------------------------------*
@@ -377,8 +381,8 @@ SELECTION-SCREEN END OF LINE.
 
 *Unremark this syntax below for your program
 *SELECTION-SCREEN BEGIN OF LINE.
-*PARAMETERS: rb99 RADIOBUTTON GROUP rb DEFAULT 'X'.
-*SELECTION-SCREEN COMMENT 4(50) h001s999.
+*PARAMETERS: rb901 RADIOBUTTON GROUP rb DEFAULT 'X'.
+*SELECTION-SCREEN COMMENT 4(50) h001s901.
 *SELECTION-SCREEN END OF LINE.
 
 SELECTION-SCREEN END OF BLOCK a01.
@@ -416,6 +420,17 @@ SELECTION-SCREEN END OF BLOCK d01.
 SELECTION-SCREEN BEGIN OF BLOCK e01 WITH FRAME TITLE h005.
 SELECT-OPTIONS: s2_matnr FOR mara-matnr MODIF ID m04.
 SELECTION-SCREEN END OF BLOCK e01.
+
+*--------------------------------------------------------------------*
+
+*Unremark this syntax below for your program
+*SELECTION-SCREEN BEGIN OF BLOCK zz91 WITH FRAME TITLE h901.
+*SELECT-OPTIONS: s5_bukrs FOR acdoca-rbukrs MEMORY ID zrg_s_1 NO-EXTENSION NO INTERVALS MODIF ID m91,
+*                s5_racct FOR acdoca-racct MEMORY ID zrg_s_2 MODIF ID m91,
+*                s5_budat FOR acdoca-budat MEMORY ID zrg_s_3 MODIF ID m91 NO-EXTENSION,
+*                s5_rcntr FOR acdoca-rcntr MEMORY ID zrg_s_4 MODIF ID m91,
+*                s5_setnm FOR setleaf-setname MEMORY ID zrg_s_5 MODIF ID m91.
+*SELECTION-SCREEN END OF BLOCK zz91.
 
 *--------------------------------------------------------------------*
 

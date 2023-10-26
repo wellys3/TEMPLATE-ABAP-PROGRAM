@@ -102,6 +102,28 @@ CLASS gcl_falv IMPLEMENTATION.
 
     "*--------------------------------------------------------------------*
 
+    lr_table->new_row( ).
+    CLEAR ld_text.
+
+    CASE gd_rb.
+      WHEN 'RB1'.
+        DESCRIBE TABLE git_excel_fix LINES DATA(ld_lines).
+      WHEN 'RB2'.
+        DESCRIBE TABLE git_bkpf LINES ld_lines.
+      WHEN 'RB3'.
+        DESCRIBE TABLE git_mara_makt LINES ld_lines.
+      WHEN 'RB4'.
+        DESCRIBE TABLE git_mara_makt_2 LINES ld_lines.
+    ENDCASE.
+
+    WRITE ld_lines TO ld_text. CONDENSE ld_text.
+    CONCATENATE ld_text 'row(s)' INTO ld_text SEPARATED BY space.
+    lr_col1->add_text( text = 'Total Row(s):' sap_style = cl_dd_area=>standard ).
+    lr_col2->add_text( text = ld_text sap_style = cl_dd_area=>standard ).
+    CLEAR ld_lines.
+
+    "*--------------------------------------------------------------------*
+
     e_dyndoc_id->merge_document( ).
 
   ENDMETHOD.
@@ -347,6 +369,8 @@ FORM f_modify_field USING p_me TYPE REF TO gcl_falv.
 *  p_me->column( 'XXX' )->set_scrtext_s( 'Your description' ). "Set short column label
 *  p_me->column( 'XXX' )->set_scrtext_m( 'Your description' ). "Set medium column label
 *  p_me->column( 'XXX' )->set_scrtext_l( 'Your description' ). "Set long column label
+*  p_me->column( 'XXX' )->set_ref_table( 'XXX' ). "Set reference table
+*  p_me->column( 'XXX' )->set_ref_field( 'XXX' ). "Set reference field
 
   "*--------------------------------------------------------------------*
 

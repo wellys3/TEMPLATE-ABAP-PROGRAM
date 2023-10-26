@@ -592,23 +592,24 @@ ENDFORM.
 *----------------------------------------------------------------------*
 *      <--P_P_FILE  text
 *----------------------------------------------------------------------*
-FORM f_get_file_dir CHANGING pp_fnm TYPE rlgrap-filename.
+FORM f_get_file_dir CHANGING p_filepath.
 
-  DATA : lt_filetable TYPE filetable.
-  DATA : ls_filetable TYPE LINE OF filetable.
-  DATA : ld_user_action TYPE i,
-         ld_rc          TYPE i.
+  DATA: ld_user_action TYPE i,
+        ld_rc          TYPE i,
+        lit_filetable  TYPE filetable,
+        lwa_filetable  TYPE LINE OF filetable.
 
   "*--------------------------------------------------------------------*
 
   CALL METHOD cl_gui_frontend_services=>file_open_dialog
     EXPORTING
       window_title            = 'Browse Upload File'
-      default_extension       = 'XLS'
+*     file_filter             = '(*.xls)|*.xls|'
+      file_filter             = '(*.pdf)|*.pdf|'
       multiselection          = abap_false
       initial_directory       = gc_init_dir
     CHANGING
-      file_table              = lt_filetable
+      file_table              = lit_filetable
       rc                      = ld_rc
       user_action             = ld_user_action
     EXCEPTIONS
@@ -626,20 +627,18 @@ FORM f_get_file_dir CHANGING pp_fnm TYPE rlgrap-filename.
   IF ld_user_action = cl_gui_frontend_services=>action_cancel.
     "The action was cancelled by the user
     MESSAGE s007(rsoh).
-    RETURN.
+    EXIT.
   ENDIF.
 
-  READ TABLE lt_filetable INTO ls_filetable INDEX 1.
+  READ TABLE lit_filetable INTO lwa_filetable INDEX 1.
   IF sy-subrc IS INITIAL.
-    pp_fnm = ls_filetable-filename.
+    p_filepath = lwa_filetable-filename.
   ENDIF.
 
-  FREE: lt_filetable.
-
-  FREE: ls_filetable.
-
-  FREE: ld_user_action,
-        ld_rc.
+  CLEAR: ld_user_action,
+         ld_rc,
+         lit_filetable,
+         lwa_filetable.
 
 ENDFORM.                    "f_get_file_dir
 
@@ -663,6 +662,27 @@ FORM f_conv_date_sapformat_with_sep   USING p_input
              p_input+6(2).
 
 ENDFORM.                    " F_CONV_DATE_SAPFORMAT_WITH_SEPARATOR
+
+
+*&---------------------------------------------------------------------*
+*&      Form  F_CONV_DATE_TO_SAPFORMAT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+*      -->P_GWA_EXCEL_RAW_COL4  text
+*      -->P_GWA_EXCEL_FIX_VALID_FROM  text
+*----------------------------------------------------------------------*
+FORM f_conv_date_to_sapformat   USING p_input
+                             CHANGING p_output.
+
+  "From DD-MM-YYYY To YYYYMMDD
+
+  CLEAR p_output.
+  p_output = p_input+6(4) &&
+             p_input+3(2) &&
+             p_input(2).
+
+ENDFORM.                    " F_CONV_DATE_TO_SAPFORMAT
 
 
 *&---------------------------------------------------------------------*
@@ -847,26 +867,6 @@ ENDFORM.
 
 
 *&---------------------------------------------------------------------*
-*&      Form  F_DEBUG
-*&---------------------------------------------------------------------*
-*       text
-*----------------------------------------------------------------------*
-*  -->  p1        text
-*  <--  p2        text
-*----------------------------------------------------------------------*
-FORM f_debug .
-
-  READ TABLE git_terminal WITH KEY low = gd_terminal.
-  IF sy-subrc EQ 0.
-    IF gd_zdebug EQ 'X'.
-      BREAK-POINT.
-    ENDIF.
-  ENDIF.
-
-ENDFORM.
-
-
-*&---------------------------------------------------------------------*
 *& Form F_GET_RB
 *&---------------------------------------------------------------------*
 *& text
@@ -889,8 +889,8 @@ FORM f_get_rb .
     gd_rb = 'RB4'.
 
 *Unremark this syntax below for your program
-*  ELSEIF rb99 EQ 'X'.
-*    gd_rb = 'RB99'.
+*  ELSEIF rb901 EQ 'X'.
+*    gd_rb = 'RB901'.
 
   ENDIF.
 
